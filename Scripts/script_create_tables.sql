@@ -70,10 +70,12 @@ drop table if exists request cascade;
 create table request (
 request_id serial primary key,
 employee_id int references employee (employee_id),
-event_id int references event_type (event_id),
-start_date date,
-available_amount numeric,
-requested_amount numeric,
+first_name varchar,
+last_name varchar,
+event_name varchar, -- references event_type (event_name),
+start_date varchar,
+-- available_amount numeric,
+requested_amount varchar,
 is_urgent bool,
 current_status varchar
 );

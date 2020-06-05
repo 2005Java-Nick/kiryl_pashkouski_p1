@@ -7,25 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import main.pashkouski.kiryl.p1.dao.ManagerDAOImpl;
-import main.pashkouski.kiryl.p1.domain.Employee;
-import main.pashkouski.kiryl.p1.domain.Manager;
-
 /**
- * Servlet implementation class GetManagerServlet
+ * Servlet implementation class SendRequest
  */
-@WebServlet("/GetManagerServlet")
-public class GetManagerServlet extends HttpServlet {
+@WebServlet("/SendRequest")
+public class SendRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	ManagerDAOImpl managerDAO = new ManagerDAOImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetManagerServlet() {
+    public SendRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +27,7 @@ public class GetManagerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -43,15 +35,7 @@ public class GetManagerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-
-		
-		Manager m = managerDAO.getManagerByLogin(request.getParameter("username"), request.getParameter("password"));
-		
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-		response.setHeader("Access-Control-Allow-Credentials", "true");
-		
-		response.getWriter().write(new ObjectMapper().writeValueAsString(m));
+		doGet(request, response);
 	}
 
 }

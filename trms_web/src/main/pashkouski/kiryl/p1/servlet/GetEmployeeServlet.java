@@ -1,6 +1,7 @@
 package main.pashkouski.kiryl.p1.servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,18 +25,8 @@ public class GetEmployeeServlet extends HttpServlet {
 	LoginDAOImpl loginDAO = new LoginDAOImpl ();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String string = request.getReader().readLine();
-		
-		string = string.replaceAll("\"", "");
-		int n = string.indexOf(',');
-		String username = string.substring(1, n);
-		System.out.println(username);
-		String password = string.substring(n+1, string.length() - 1);
-		System.out.println(password);
 
-		System.out.println(request.getParameter("username"));
-		Employee e = loginDAO.getEmployeeByLogin(username, password);
+		Employee e = loginDAO.getEmployeeByLogin(request.getParameter("username"), request.getParameter("password"));
 		
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		response.setHeader("Access-Control-Allow-Credentials", "true");

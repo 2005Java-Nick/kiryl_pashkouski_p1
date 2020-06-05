@@ -9,33 +9,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import main.pashkouski.kiryl.p1.dao.ManagerDAOImpl;
-import main.pashkouski.kiryl.p1.domain.Employee;
-import main.pashkouski.kiryl.p1.domain.Manager;
+import main.pashkouski.kiryl.p1.dao.RequestDAO;
+import main.pashkouski.kiryl.p1.dao.RequestDAOImpl;
+import main.pashkouski.kiryl.p1.domain.Request;
 
 /**
- * Servlet implementation class GetManagerServlet
+ * Servlet implementation class SaveRequest
  */
-@WebServlet("/GetManagerServlet")
-public class GetManagerServlet extends HttpServlet {
+@WebServlet("/SaveRequest")
+public class SaveRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	ManagerDAOImpl managerDAO = new ManagerDAOImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetManagerServlet() {
+    public SaveRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
+    Request r = new Request ();
+    RequestDAO requestDAO = new RequestDAOImpl();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -43,15 +43,22 @@ public class GetManagerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-
+		// doGet(request, response);
 		
-		Manager m = managerDAO.getManagerByLogin(request.getParameter("username"), request.getParameter("password"));
+		r.setLastName(request.getParameter("lastname"));
+		r.setFirstName(request.getParameter("firstname"));
+		r.setEventName(request.getParameter("eventtype"));
+		r.setDate(request.getParameter("date"));
+		r.setRequestedAmount(request.getParameter("amount"));
+		
+		
+		requestDAO.saveRequest(r);
 		
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		response.getWriter().write(new ObjectMapper().writeValueAsString(m));
+		response.getWriter().write(new ObjectMapper().writeValueAsString("Saved!"));
+		
 	}
 
 }
